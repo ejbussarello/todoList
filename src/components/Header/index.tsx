@@ -10,7 +10,8 @@ interface Props {
 
 export function Header({ onAddTask }: Props) {
     const [title, setTitle] = useState("");
-
+    const isBtnDisable = title == "";
+    
     function handleSubmit(event: FormEvent) {
         event.preventDefault(); 
 
@@ -28,7 +29,7 @@ export function Header({ onAddTask }: Props) {
 
             <form className={styles.newTaskForm} onSubmit={handleSubmit}>
                 <input placeholder="Adicione uma nova tarefa" onChange={onChangeTitle} value={title} />
-                <button>
+                <button disabled={isBtnDisable}>
                     Criar
                     <AiOutlinePlusCircle size={20} />
                 </button>

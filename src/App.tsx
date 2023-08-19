@@ -9,18 +9,7 @@ export interface iTask {
 }
 
 export function App() {
-  const [tasks, setTasks] = useState<iTask[]>([
-    {
-      id: "Teste",
-      title: "Teste",
-      isCompleted: true,
-    },
-    {
-      id: "Teste2",
-      title: "Teste2",
-      isCompleted: false,
-    }
-  ]);
+  const [tasks, setTasks] = useState<iTask[]>([]);
 
   function addTask(taskTitle: string) {
     setTasks([
@@ -33,10 +22,31 @@ export function App() {
     ]);
   }
 
+  function deleteTaskById(taskId: string) {
+    const newTasks = tasks.filter((task) => task.id != taskId);
+    setTasks(newTasks);
+  }
+
+  function toogleTaksCompletedById(taskId: string) {
+    const newTasks = tasks.map(task => {
+      if(task.id == taskId) {
+        return {
+          ...task,
+          isCompleted: !task.isCompleted,
+        };
+      }
+      return task;
+    });
+    setTasks(newTasks);
+  }
+
   return (
     <>
       <Header onAddTask={addTask} />
-      <Tasks tasks={tasks} />
+      <Tasks 
+        tasks={tasks} 
+        onDelete={deleteTaskById} 
+        onComplete={toogleTaksCompletedById} />
     </>
   )
 }
